@@ -68,6 +68,25 @@ exports.GetSubs = (req, res, db) => {
   .catch(err => console.error(err));
 };
 
+exports.GetSub = (req, res, db) => {
+  const { subId } = req.params;
+  db.collection('subjects')
+  .findOne({ _id: ObjectId(subId) })
+  .then(doc => {
+    let data = doc;
+    let percent = Number((doc.details.attended / doc.details.total * 100).toFixed(2));
+    if (!percent) {
+      percent = 0;
+    }
+    data.details.percent = percent;
+    res.status(200).json({
+      status: 'success',
+      doc: data
+    })
+  })
+  .catch(err => console.error(err));
+};
+
 exports.Hi = (req, res) => {
   res.status(200).json({ msg: "Hi!" });
 };

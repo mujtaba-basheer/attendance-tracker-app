@@ -23,6 +23,9 @@ client.connect(function(err, db) {
       .route("/getSubs")
       .get((req, res) => track.GetSubs(req, res, db));
     router
+      .route("/getSub/:subId")
+      .get((req, res) => track.GetSub(req, res, db));
+    router
       .route("/recordAttendance/:subId")
       .post((req, res) => track.RecordAttendance(req, res, db));
 
